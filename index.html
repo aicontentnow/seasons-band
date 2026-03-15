@@ -124,7 +124,14 @@ body {
   position: absolute; inset: 0;
   background:
     linear-gradient(to bottom, transparent 30%, rgba(20,20,20,0.5) 60%, var(--bg) 100%),
-    url('assets/images/albums/spring-cover.jpg') center center / cover no-repeat;
+    url('assets/images/albums/spring-cover-mobile.jpg') center center / cover no-repeat;
+}
+@media (min-width: 769px) {
+  .hero-bg {
+    background:
+      linear-gradient(to bottom, transparent 40%, rgba(20,20,20,0.4) 65%, var(--bg) 100%),
+      url('assets/images/albums/spring-cover-wide.jpg') center center / cover no-repeat;
+  }
 }
 .hero-bg::after {
   content: ''; position: absolute; inset: 0;

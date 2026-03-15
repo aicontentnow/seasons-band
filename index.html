@@ -991,6 +991,8 @@ const seasonData = {
     gradient: 'spring-gradient',
     color: '#6b8f4e',
     match: '98% Match',
+    cover: 'assets/images/albums/spring-cover.jpg',
+    epImages: ['assets/images/episodes/spring-ep1.jpg','assets/images/episodes/spring-ep2.jpg','assets/images/episodes/spring-ep3.jpg','assets/images/episodes/spring-ep4.jpg','assets/images/episodes/spring-ep5.jpg','assets/images/episodes/spring-ep6.jpg','assets/images/episodes/spring-ep7.jpg','assets/images/episodes/spring-ep8.jpg','assets/images/episodes/spring-ep9.jpg'],
     desc: 'Two strangers. One season of waking up to what your body can do. BØDHI and MAŸA stumble into desire, lust, and the kind of pleasure that rewires you. They get closer with every track \u2014 touching, wanting, learning the rules have changed. Spring ends right before they collapse into each other. Fully awake. Fully alive. Catastrophically ready for what comes next.',
     tracks: [
       { num: 1, title: 'Watch You Grow', duration: '3:56' },
@@ -1113,15 +1115,25 @@ function openModal(season) {
   const body = document.getElementById('modalBody');
 
   bg.className = 'modal-hero-bg ' + data.gradient;
+  if (data.cover) {
+    bg.style.backgroundImage = \`url('\${data.cover}')\`;
+    bg.style.backgroundSize = 'cover';
+    bg.style.backgroundPosition = 'center';
+  } else {
+    bg.style.backgroundImage = '';
+  }
 
   let episodeHtml = '';
   if (data.tracks.length > 0) {
     episodeHtml = '<div class="episode-list"><h4>Episodes</h4>';
-    data.tracks.forEach(t => {
+    data.tracks.forEach((t, i) => {
+      const thumbStyle = data.epImages && data.epImages[i]
+        ? `style="background:url('${data.epImages[i]}') center/cover, linear-gradient(135deg, #2a2215 0%, #1a1410 100%);"`
+        : '';
       episodeHtml += `
         <div class="episode-row">
           <span class="ep-number">${t.num}</span>
-          <div class="ep-thumb ${data.gradient}"></div>
+          <div class="ep-thumb ${data.gradient}" ${thumbStyle}></div>
           <div class="ep-info">
             <h5>${t.title}</h5>
             <span class="ep-dur">${t.duration}</span>

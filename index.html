@@ -569,6 +569,13 @@ body {
   font-size: 14px; color: var(--text-secondary);
   line-height: 1.6; margin-bottom: 20px;
 }
+.modal-ep-badge {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 4px;
+}
+.episode-row-active {
+  background: rgba(255,255,255,0.08); border-radius: 6px;
+}
 .modal-close {
   position: absolute; top: 12px; right: 12px;
   width: 32px; height: 32px; border-radius: 50%;
@@ -746,7 +753,7 @@ body {
   <a href="#home" style="display:flex;align-items:center;"><img class="nav-logo" src="assets/images/logo/brandmark-greyscale.png" alt="SEASØNS"></a>
   <div class="nav-links">
     <a href="#home" class="active">Home</a>
-    <a href="#seasons">Seasøns</a>
+    <a href="#seasons">SEASØNS</a>
     <a href="#about">About</a>
     <a href="#" onclick="scrollToPlayer(); return false;" class="nav-cta">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -892,7 +899,7 @@ body {
       <a href="#">Amazon Music</a>
     </div>
     <div class="footer-col">
-      <h5>Seasøns</h5>
+      <h5>SEASØNS</h5>
       <a href="#" onclick="openModal('spring');return false;">Spring</a>
       <a href="#" onclick="openModal('summer');return false;">Summer</a>
       <a href="#" onclick="openModal('autumn');return false;">Autumn</a>
@@ -971,7 +978,7 @@ body {
   </a>
   <a href="#seasons" class="bottom-nav-item" data-tab="seasons">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>
-    <span>Seasøns</span>
+    <span>SEASØNS</span>
   </a>
   <a href="#about" class="bottom-nav-item" data-tab="about">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
@@ -1000,15 +1007,15 @@ const seasonData = {
     epImages: ['assets/images/episodes/spring-ep1.jpg','assets/images/episodes/spring-ep2.jpg','assets/images/episodes/spring-ep3.jpg','assets/images/episodes/spring-ep4.jpg','assets/images/episodes/spring-ep5.jpg','assets/images/episodes/spring-ep6.jpg','assets/images/episodes/spring-ep7.jpg','assets/images/episodes/spring-ep8.jpg','assets/images/episodes/spring-ep9.jpg'],
     desc: 'Two strangers. One season of waking up to what your body can do. BØDHI and MAŸA stumble into desire, lust, and the kind of pleasure that rewires you. They get closer with every track \u2014 touching, wanting, learning the rules have changed. Spring ends right before they collapse into each other. Fully awake. Fully alive. Catastrophically ready for what comes next.',
     tracks: [
-      { num: 1, title: 'Watch You Grow', duration: '3:56' },
-      { num: 2, title: 'Cheerleader', duration: '2:31' },
-      { num: 3, title: 'Jukebox', duration: '4:15' },
-      { num: 4, title: 'Freak In You', duration: '3:28' },
-      { num: 5, title: 'Rewind', duration: '3:06' },
-      { num: 6, title: 'Once Upon A Moment', duration: '4:00' },
-      { num: 7, title: 'Believe In This', duration: '4:34' },
-      { num: 8, title: "You're A Star", duration: '1:52' },
-      { num: 9, title: 'Sweet Freedom', duration: '3:11' }
+      { num: 1, title: 'Watch You Grow', duration: '3:56', desc: 'The first glance. BØDHI notices MAŸA from across a field and something roots him to the ground. A quiet folk hymn about the terror of watching someone become important before you even know their name.' },
+      { num: 2, title: 'Cheerleader', duration: '2:31', desc: 'MAŸA catches BØDHI watching. Instead of looking away, she watches back. A playful, percussive track about the electricity of being seen by someone who wants to see more.' },
+      { num: 3, title: 'Jukebox', duration: '4:15', desc: 'Their first real conversation. They trade stories like songs, each one revealing a little more. A warm, layered duet about finding someone who speaks your frequency.' },
+      { num: 4, title: 'Freak In You', duration: '3:28', desc: 'The energy shifts. What was sweet becomes urgent. They stop pretending they only want to talk. A sultry, rhythm-heavy track about the moment attraction stops being polite.' },
+      { num: 5, title: 'Rewind', duration: '3:06', desc: 'A night they want to live twice. Every touch replayed in slow motion. A dreamy, looping track about memorizing someone with your hands.' },
+      { num: 6, title: 'Once Upon A Moment', duration: '4:00', desc: 'The morning after the night that changed everything. They lie still, afraid to move, afraid to break whatever spell this is. A suspended, cinematic ballad about holding time hostage.' },
+      { num: 7, title: 'Believe In This', duration: '4:34', desc: 'The decision to stop running from what they feel. They choose each other out loud. An anthemic, building track about faith in something that has no proof yet.' },
+      { num: 8, title: "You're A Star", duration: '1:52', desc: 'A whispered devotion. BØDHI tells MAŸA what she is when she forgets. Short, raw, unpolished on purpose. A voice note disguised as a song.' },
+      { num: 9, title: 'Sweet Freedom', duration: '3:11', desc: 'Spring ends. They stand at the edge of summer, fully awake, catastrophically ready. A bittersweet closing track about the freedom of finally being known.' }
     ],
     status: 'Now Streaming'
   },
@@ -1075,7 +1082,7 @@ document.body.style.overflow = 'hidden';
   seasonData.spring.tracks.forEach((track, i) => {
     const card = document.createElement('div');
     card.className = 'episode-card';
-    card.onclick = function() { openModal('spring'); };
+    card.onclick = function() { openEpisodeModal('spring', i); };
     card.innerHTML = `
       <div class="thumb" style="background:url('${epImages[i]}') center/cover, linear-gradient(135deg, ${springColors[i]} 0%, #1a1410 100%);">
         <div class="ep-num">EP ${track.num}</div>
@@ -1171,6 +1178,69 @@ function openModal(season) {
 
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
+}
+
+function openEpisodeModal(season, epIndex) {
+  const data = seasonData[season];
+  if (!data || !data.tracks[epIndex]) return;
+  const track = data.tracks[epIndex];
+  const overlay = document.getElementById('modalOverlay');
+  const bg = document.getElementById('modalHeroBg');
+  const body = document.getElementById('modalBody');
+
+  // Episode artwork as hero
+  const epImg = data.epImages && data.epImages[epIndex] ? data.epImages[epIndex] : '';
+  bg.className = 'modal-hero-bg ' + data.gradient;
+  if (epImg) {
+    bg.style.backgroundImage = `url('${epImg}')`;
+    bg.style.backgroundSize = 'cover';
+    bg.style.backgroundPosition = 'center top';
+  } else {
+    bg.style.backgroundImage = '';
+  }
+
+  // Build episode list carousel at bottom
+  let epListHtml = '<div class="episode-list"><h4>All Episodes</h4>';
+  data.tracks.forEach((t, i) => {
+    const thumbStyle = data.epImages && data.epImages[i]
+      ? `style="background:url('${data.epImages[i]}') center/cover, linear-gradient(135deg, #2a2215 0%, #1a1410 100%);"`
+      : '';
+    const activeClass = i === epIndex ? ' episode-row-active' : '';
+    epListHtml += `
+      <div class="episode-row${activeClass}" onclick="openEpisodeModal('${season}', ${i})" style="cursor:pointer;">
+        <span class="ep-number">${t.num}</span>
+        <div class="ep-thumb ${data.gradient}" ${thumbStyle}></div>
+        <div class="ep-info">
+          <h5>${t.title}</h5>
+          <span class="ep-dur">${t.duration}</span>
+        </div>
+      </div>`;
+  });
+  epListHtml += '</div>';
+
+  body.innerHTML = `
+    <div class="modal-ep-badge">Episode ${track.num} of ${data.tracks.length}</div>
+    <h2 class="modal-title">${track.title}</h2>
+    <div class="modal-meta">
+      <span>${data.title}</span>
+      <span>${track.duration}</span>
+      <span>${data.genre}</span>
+    </div>
+    <div class="modal-actions">
+      ${data.status === 'Now Streaming'
+        ? '<a href="#" onclick="closeModal();setTimeout(function(){playTrack(' + epIndex + ')},300);return false;" class="btn btn-gold"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play Episode</a>'
+        : '<button class="btn btn-secondary" disabled>' + data.status + '</button>'
+      }
+    </div>
+    <p class="modal-desc">${track.desc || ''}</p>
+    ${epListHtml}
+  `;
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  // Scroll modal body to top when switching episodes
+  const sheet = overlay.querySelector('.modal-sheet');
+  if (sheet) sheet.scrollTop = 0;
 }
 
 function closeModal(e) {

@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SEASØNS - A Vertical Cinema Series in Four Seasons</title>
+<meta name="description" content="Musical duet. Two strangers. Four seasons. One story. Stream Spring now.">
+<meta property="og:title" content="SEASØNS - A Vertical Cinema Series in Four Seasons">
+<meta property="og:description" content="Across four worlds of sound and story, BØDHI and MAŸA trace the distance between who they are and who they're becoming.">
+<meta property="og:image" content="assets/images/albums/spring-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #141414;
+  --bg-card: #1a1a1a;
+  --bg-elevated: #222;
+  --text-primary: #e5e5e5;
+  --text-secondary: #999;
+  --text-muted: #666;
+  --gold: #E8C547;
+  --gold-dim: rgba(232, 197, 71, 0.15);
+  --spring-green: #6b8f4e;
+  --summer-pink: #e84393;
+  --autumn-blue: #4a6fa5;
+  --winter-silver: #b8c6d4;
+  --nav-height: 56px;
+  --bottom-nav-height: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 80px);
+}
+
+/* ===== TOP NAV ===== */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  z-index: 1000;
+  transition: background 0.3s;
+}
+.top-nav.scrolled {
+  background: rgba(20, 20, 20, 0.97);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+}
+.nav-logo {
+  height: 32px; width: auto;
+  filter: brightness(1.1);
+}
+.nav-links { display: flex; gap: 20px; align-items: center; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 13px; font-weight: 400; letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: #fff; }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--gold) !important; font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px !important; letter-spacing: 0.12em;
+  padding: 6px 14px; border: 1px solid var(--gold);
+  border-radius: 3px; transition: all 0.3s;
+}
+.nav-cta:hover { background: var(--gold); color: #0a0a0a !important; }
+
+/* Mobile: hide text links, show only logo + CTA */
+@media (max-width: 768px) {
+  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-logo { height: 28px; }
+}
+
+/* ===== BOTTOM NAV (Mobile) ===== */
+.bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: calc(var(--bottom-nav-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: rgba(20, 20, 20, 0.97);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  z-index: 1000;
+  justify-content: space-around; align-items: center;
+}
+@media (max-width: 768px) { .bottom-nav { display: flex; } }
+
+.bottom-nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  color: var(--text-muted); text-decoration: none;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.03em;
+  transition: color 0.2s; padding: 8px 12px;
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav-item.active { color: #fff; }
+.bottom-nav-item svg { width: 22px; height: 22px; }
+
+/* ===== HERO SECTION ===== */
+.hero {
+  position: relative;
+  height: 90vh; min-height: 550px; max-height: 800px;
+  display: flex; align-items: flex-end;
+  padding: 0 4%; padding-bottom: 8%;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, transparent 30%, rgba(20,20,20,0.5) 60%, var(--bg) 100%),
+    url('assets/images/albums/spring-cover.jpg') center center / cover no-repeat;
+}
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(107,143,78,0.15) 0%, transparent 60%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 550px;
+}
+.hero-badge {
+  display: inline-block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.2em;
+  color: var(--gold); background: var(--gold-dim);
+  padding: 4px 12px; border-radius: 2px;
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  letter-spacing: 0.08em; line-height: 1.05;
+  color: #fff; margin-bottom: 8px;
+}
+.hero-subtitle {
+  font-size: 15px; color: var(--text-secondary);
+  line-height: 1.5; margin-bottom: 20px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12px; color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.hero-meta .tag {
+  background: rgba(255,255,255,0.1); padding: 2px 8px;
+  border-radius: 2px; font-size: 11px; font-weight: 500;
+}
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 24px; border-radius: 4px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all 0.2s; letter-spacing: 0.01em;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary { background: #fff; color: #000; }
+.btn-primary:hover { background: rgba(255,255,255,0.85); }
+.btn-secondary { background: rgba(255,255,255,0.15); color: #fff; }
+.btn-secondary:hover { background: rgba(255,255,255,0.25); }
+.btn-gold { background: var(--gold); color: #0a0a0a; }
+.btn-gold:hover { background: #d4b13e; }
+.btn svg { width: 18px; height: 18px; }
+
+/* ===== PROFILE PICKER (Who's Listening) ===== */
+.profile-picker {
+  position: fixed; inset: 0; z-index: 2000;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 32px;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+.profile-picker.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.profile-picker-logo { height: 64px; margin-bottom: 8px; }
+.profile-picker h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 300; color: #fff;
+}
+.profiles { display: flex; gap: 24px; }
+.profile {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  cursor: pointer; transition: transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.profile:hover { transform: scale(1.05); }
+.profile img {
+  width: 120px; height: 120px;
+  border-radius: 6px; object-fit: cover;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.profile:hover img { border-color: #fff; }
+.profile span {
+  font-size: 13px; color: var(--text-secondary);
+  font-weight: 400;
+}
+@media (max-width: 480px) {
+  .profile img { width: 100px; height: 100px; }
+}
+
+/* ===== CAROUSEL ROW ===== */
+.carousel-section {
+  padding: 24px 0 8px;
+}
+.carousel-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 0 4%; margin-bottom: 12px;
+}
+.carousel-header h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px; font-weight: 600; color: #fff;
+}
+.carousel-header .see-all {
+  font-size: 12px; color: var(--text-muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.carousel-header .see-all:hover { color: var(--gold); }
+
+.carousel-track {
+  display: flex; gap: 8px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 0 4%;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+/* Episode Cards */
+.episode-card {
+  flex: 0 0 auto;
+  width: 130px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.episode-card:hover { transform: scale(1.03); }
+.episode-card .thumb {
+  width: 100%; aspect-ratio: 9/16;
+  border-radius: 6px; overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #2a2215 0%, #1a1410 100%);
+}
+.episode-card .thumb .ep-num {
+  position: absolute; top: 8px; left: 8px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.8);
+  background: rgba(0,0,0,0.5); padding: 2px 6px;
+  border-radius: 2px;
+}
+.episode-card .thumb .play-icon {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s;
+  background: rgba(0,0,0,0.3);
+}
+.episode-card:hover .play-icon { opacity: 1; }
+.episode-card .info { padding: 8px 2px 0; }
+.episode-card .info h4 {
+  font-size: 12px; font-weight: 500; color: var(--text-primary);
+  line-height: 1.3; margin-bottom: 2px;
+}
+.episode-card .info .duration {
+  font-size: 11px; color: var(--text-muted);
+}
+
+/* Season Cards (wider, landscape) */
+.season-card {
+  flex: 0 0 auto;
+  width: 280px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (max-width: 480px) { .season-card { width: 240px; } }
+.season-card:hover { transform: scale(1.02); }
+.season-card .thumb {
+  width: 100%; aspect-ratio: 16/9;
+  border-radius: 6px; overflow: hidden;
+  position: relative;
+}
+.season-card .thumb-bg {
+  position: absolute; inset: 0;
+}
+.season-card .season-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+}
+.season-card .season-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: 0.1em;
+  color: #fff;
+}
+.season-card .season-sub {
+  font-size: 12px; color: var(--text-secondary);
+  line-height: 1.4; margin-top: 4px;
+}
+.season-card .coming-soon-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.12);
+  padding: 3px 8px; border-radius: 2px;
+  backdrop-filter: blur(4px);
+}
+
+/* Music Cards */
+.music-card {
+  flex: 0 0 auto;
+  width: 160px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.music-card:hover { transform: scale(1.03); }
+.music-card .album-art {
+  width: 100%; aspect-ratio: 1;
+  border-radius: 6px; overflow: hidden;
+  position: relative;
+}
+.music-card .album-art .play-overlay {
+  position: absolute; bottom: 8px; right: 8px;
+  width: 40px; height: 40px;
+  background: var(--gold); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateY(4px);
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.music-card:hover .play-overlay { opacity: 1; transform: translateY(0); }
+.music-card .info { padding: 10px 2px 0; }
+.music-card .info h4 {
+  font-size: 13px; font-weight: 600; color: var(--text-primary);
+}
+.music-card .info p {
+  font-size: 12px; color: var(--text-muted); margin-top: 2px;
+}
+
+/* ===== LISTEN SECTION (Spotify Embed) ===== */
+.listen-section {
+  padding: 32px 4%;
+}
+.listen-section h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px; font-weight: 600; color: #fff;
+  margin-bottom: 16px;
+}
+.spotify-embed {
+  width: 100%; max-width: 400px;
+  border-radius: 12px; overflow: hidden;
+}
+.spotify-embed iframe {
+  width: 100%; height: 352px; border: none;
+  border-radius: 12px;
+}
+
+/* ===== MODAL / DETAIL OVERLAY ===== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 3000;
+  background: rgba(0,0,0,0.75);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal-sheet {
+  width: 100%; max-width: 600px;
+  max-height: 85vh;
+  background: var(--bg-elevated);
+  border-radius: 16px 16px 0 0;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.modal-overlay.active .modal-sheet { transform: translateY(0); }
+
+@media (min-width: 769px) {
+  .modal-overlay { align-items: center; }
+  .modal-sheet {
+    border-radius: 12px;
+    max-height: 80vh;
+    transform: scale(0.95) translateY(20px);
+  }
+  .modal-overlay.active .modal-sheet { transform: scale(1) translateY(0); }
+}
+
+.modal-handle {
+  width: 36px; height: 4px;
+  background: rgba(255,255,255,0.2); border-radius: 2px;
+  margin: 10px auto 0;
+}
+.modal-hero {
+  width: 100%; aspect-ratio: 16/10;
+  position: relative; overflow: hidden;
+}
+.modal-hero-bg { position: absolute; inset: 0; }
+.modal-hero-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--bg-elevated) 0%, transparent 60%);
+}
+.modal-body { padding: 0 20px 24px; }
+.modal-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.modal-meta {
+  display: flex; gap: 12px; align-items: center;
+  font-size: 13px; color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.modal-meta .match { color: #46d369; font-weight: 600; }
+.modal-actions { display: flex; gap: 10px; margin-bottom: 20px; }
+.modal-desc {
+  font-size: 14px; color: var(--text-secondary);
+  line-height: 1.6; margin-bottom: 20px;
+}
+.modal-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(0,0,0,0.6); border: none;
+  color: #fff; cursor: pointer; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Episode list inside modal */
+.episode-list { margin-top: 8px; }
+.episode-list h4 {
+  font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #fff;
+}
+.episode-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.episode-row .ep-number {
+  font-size: 15px; color: var(--text-muted);
+  width: 24px; text-align: center; flex-shrink: 0;
+}
+.episode-row .ep-thumb {
+  width: 100px; aspect-ratio: 16/9;
+  border-radius: 4px; overflow: hidden;
+  flex-shrink: 0;
+}
+.episode-row .ep-info { flex: 1; }
+.episode-row .ep-info h5 {
+  font-size: 13px; font-weight: 500; color: var(--text-primary);
+}
+.episode-row .ep-info .ep-dur {
+  font-size: 12px; color: var(--text-muted); margin-top: 2px;
+}
+
+/* ===== MINI PLAYER ===== */
+.mini-player {
+  position: fixed; left: 0; right: 0;
+  bottom: calc(var(--bottom-nav-height) + var(--safe-bottom));
+  height: 56px;
+  background: linear-gradient(135deg, #2a2215 0%, #1e1a12 100%);
+  border-top: 1px solid rgba(232,197,71,0.15);
+  display: flex; align-items: center;
+  padding: 0 12px;
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.mini-player.visible { transform: translateY(0); }
+@media (min-width: 769px) {
+  .mini-player { bottom: 0; }
+}
+.mini-player .mp-art {
+  width: 40px; height: 40px; border-radius: 4px;
+  flex-shrink: 0; overflow: hidden;
+}
+.mini-player .mp-info { flex: 1; padding: 0 12px; overflow: hidden; }
+.mini-player .mp-info h5 {
+  font-size: 13px; font-weight: 500; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mini-player .mp-info p {
+  font-size: 11px; color: var(--text-muted);
+}
+.mini-player .mp-controls { display: flex; gap: 8px; align-items: center; }
+.mp-btn {
+  width: 36px; height: 36px; border: none;
+  background: none; color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; transition: background 0.2s;
+}
+.mp-btn:hover { background: rgba(255,255,255,0.1); }
+.mp-btn.play-pause {
+  width: 40px; height: 40px;
+  background: var(--gold); color: #0a0a0a;
+}
+.mp-btn.play-pause:hover { background: #d4b13e; }
+.mini-player .progress-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: rgba(255,255,255,0.1);
+}
+.mini-player .progress-fill {
+  height: 100%; width: 35%;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-section {
+  padding: 40px 4%;
+  max-width: 700px;
+}
+.about-section h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.about-section p {
+  font-size: 14px; color: var(--text-secondary);
+  line-height: 1.7; margin-bottom: 16px;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  padding: 40px 4% 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 24px; margin-bottom: 32px;
+}
+.footer-col h5 {
+  font-size: 12px; color: var(--text-muted);
+  font-weight: 500; letter-spacing: 0.05em;
+  margin-bottom: 12px; text-transform: uppercase;
+}
+.footer-col a {
+  display: block; font-size: 13px;
+  color: var(--text-secondary); text-decoration: none;
+  padding: 4px 0; transition: color 0.2s;
+}
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  font-size: 12px; color: var(--text-muted);
+}
+.footer-socials {
+  display: flex; gap: 16px; margin-bottom: 12px;
+}
+.footer-socials a {
+  color: var(--text-muted); transition: color 0.2s;
+}
+.footer-socials a:hover { color: #fff; }
+.footer-socials svg { width: 20px; height: 20px; }
+
+/* ===== SECTION DIVIDER ===== */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent);
+  margin: 8px 4%;
+}
+
+/* ===== SPRING COLOR ACCENTS ===== */
+.spring-gradient { background: linear-gradient(135deg, #3a2e18 0%, #2a2215 40%, #1a1a14 100%); }
+.summer-gradient { background: linear-gradient(135deg, #2a1428 0%, #1a1020 40%, #141418 100%); }
+.autumn-gradient { background: linear-gradient(135deg, #1a2030 0%, #141a28 40%, #141418 100%); }
+.winter-gradient { background: linear-gradient(135deg, #1e2228 0%, #181c22 40%, #141418 100%); }
+
+/* ===== UTILITIES ===== */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.fade-in { opacity: 0; transform: translateY(12px); transition: opacity 0.5s, transform 0.5s; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ===== PROFILE PICKER ===== -->
+<div class="profile-picker" id="profilePicker">
+  <img class="profile-picker-logo" src="assets/images/logo/brandmark-greyscale.png" alt="SEASØNS">
+  <h2>Who's listening?</h2>
+  <div class="profiles">
+    <div class="profile" onclick="enterSite()">
+      <img src="assets/images/artists/bodhi-closeup.jpg" alt="BØDHI">
+      <span>BØDHI</span>
+    </div>
+    <div class="profile" onclick="enterSite()">
+      <img src="assets/images/artists/maya-closeup.jpg" alt="MAŸA">
+      <span>MAŸA</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOP NAV ===== -->
+<nav class="top-nav" id="topNav">
+  <img class="nav-logo" src="assets/images/logo/brandmark-greyscale.png" alt="SEASØNS">
+  <div class="nav-links">
+    <a href="#home" class="active">Home</a>
+    <a href="#seasons">Seasons</a>
+    <a href="#about">About</a>
+    <a href="https://xn--seasns-eya.hearnow.com/spring" target="_blank" rel="noopener" class="nav-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      LISTEN NOW
+    </a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content fade-in">
+    <div class="hero-badge">SEASON 1</div>
+    <h1 class="hero-title">SPRING</h1>
+    <p class="hero-subtitle">Two strangers. One season of waking up to what your body can do.</p>
+    <div class="hero-meta">
+      <span class="tag">9 Episodes</span>
+      <span>30 min</span>
+      <span>2026</span>
+      <span>Folk / Dream-Pop</span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://xn--seasns-eya.hearnow.com/spring" target="_blank" rel="noopener" class="btn btn-gold">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Listen
+      </a>
+      <button class="btn btn-secondary" onclick="openModal('spring')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        More Info
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NOW STREAMING: SPRING EPISODES ===== -->
+<section class="carousel-section fade-in" id="episodes">
+  <div class="carousel-header">
+    <h3>Now Streaming: Spring</h3>
+  </div>
+  <div class="carousel-track" id="episodeCarousel">
+    <!-- Episodes generated by JS -->
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== LISTEN TO SPRING (Music Row) ===== -->
+<section class="carousel-section fade-in">
+  <div class="carousel-header">
+    <h3>Listen to Spring</h3>
+    <a href="https://xn--seasns-eya.hearnow.com/spring" target="_blank" rel="noopener" class="see-all">Stream anywhere &rsaquo;</a>
+  </div>
+  <div class="carousel-track">
+    <div class="music-card" onclick="showPlayer()">
+      <div class="album-art" style="background:url('assets/images/albums/spring-cover.jpg') center/cover;">
+        <div class="play-overlay">
+          <svg viewBox="0 0 24 24" fill="#0a0a0a" width="20" height="20"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </div>
+      </div>
+      <div class="info">
+        <h4>Spring - Full Album</h4>
+        <p>9 tracks - 30:53</p>
+      </div>
+    </div>
+    <div class="music-card" onclick="showPlayer()">
+      <div class="album-art" style="background:url('assets/images/episodes/spring-ep1.jpg') center/cover;">
+        <svg viewBox="0 0 60 60" width="0" height="0" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(107,143,78,0.4)" stroke-width="1"/><text x="30" y="34" text-anchor="middle" font-family="Inter" font-size="7" fill="rgba(255,255,255,0.5)">Watch You Grow</text></svg>
+        <div class="play-overlay">
+          <svg viewBox="0 0 24 24" fill="#0a0a0a" width="20" height="20"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </div>
+      </div>
+      <div class="info">
+        <h4>Watch You Grow</h4>
+        <p>3:56</p>
+      </div>
+    </div>
+    <div class="music-card" onclick="showPlayer()">
+      <div class="album-art" style="background:url('assets/images/episodes/spring-ep2.jpg') center/cover;">
+        <svg viewBox="0 0 60 60" width="0" height="0" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(107,143,78,0.4)" stroke-width="1"/><text x="30" y="34" text-anchor="middle" font-family="Inter" font-size="8" fill="rgba(255,255,255,0.5)">Cheerleader</text></svg>
+        <div class="play-overlay">
+          <svg viewBox="0 0 24 24" fill="#0a0a0a" width="20" height="20"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </div>
+      </div>
+      <div class="info">
+        <h4>Cheerleader</h4>
+        <p>2:31</p>
+      </div>
+    </div>
+    <div class="music-card" onclick="showPlayer()">
+      <div class="album-art" style="background:url('assets/images/episodes/spring-ep3.jpg') center/cover;">
+        <svg viewBox="0 0 60 60" width="0" height="0" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(107,143,78,0.4)" stroke-width="1"/><text x="30" y="34" text-anchor="middle" font-family="Inter" font-size="10" fill="rgba(255,255,255,0.5)">Jukebox</text></svg>
+        <div class="play-overlay">
+          <svg viewBox="0 0 24 24" fill="#0a0a0a" width="20" height="20"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </div>
+      </div>
+      <div class="info">
+        <h4>Jukebox</h4>
+        <p>4:15</p>
+      </div>
+    </div>
+    <div class="music-card" onclick="showPlayer()">
+      <div class="album-art" style="background:url('assets/images/episodes/spring-ep4.jpg') center/cover;">
+        <svg viewBox="0 0 60 60" width="0" height="0" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(107,143,78,0.4)" stroke-width="1"/><text x="30" y="34" text-anchor="middle" font-family="Inter" font-size="7" fill="rgba(255,255,255,0.5)">Freak In You</text></svg>
+        <div class="play-overlay">
+          <svg viewBox="0 0 24 24" fill="#0a0a0a" width="20" height="20"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        </div>
+      </div>
+      <div class="info">
+        <h4>Freak In You</h4>
+        <p>3:28</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== THE SEASØNS (Season Cards) ===== -->
+<section class="carousel-section fade-in" id="seasons">
+  <div class="carousel-header">
+    <h3>The SEASØNS</h3>
+  </div>
+  <div class="carousel-track">
+    <div class="season-card" onclick="openModal('spring')">
+      <div class="thumb">
+        <div class="thumb-bg" style="width:100%;height:100%;background:url('assets/images/seasons/spring-banner.jpg') center/cover;"></div>
+        <div class="season-overlay">
+          <div class="season-label">SPRING</div>
+          <div class="season-sub">9 episodes - Now streaming</div>
+        </div>
+      </div>
+    </div>
+    <div class="season-card" onclick="openModal('summer')">
+      <div class="thumb">
+        <div class="thumb-bg" style="width:100%;height:100%;background:url('assets/images/seasons/summer-banner.jpg') center/cover;"></div>
+        <div class="season-overlay">
+          <div class="season-label">SUMMER</div>
+          <div class="season-sub">17 episodes</div>
+        </div>
+        <div class="coming-soon-badge">COMING SOON</div>
+      </div>
+    </div>
+    <div class="season-card" onclick="openModal('autumn')">
+      <div class="thumb">
+        <div class="thumb-bg" style="width:100%;height:100%;background:url('assets/images/seasons/autumn-banner.jpg') center/cover;"></div>
+        <div class="season-overlay">
+          <div class="season-label">AUTUMN</div>
+          <div class="season-sub">14 episodes</div>
+        </div>
+        <div class="coming-soon-badge">COMING SOON</div>
+      </div>
+    </div>
+    <div class="season-card" onclick="openModal('winter')">
+      <div class="thumb">
+        <div class="thumb-bg" style="width:100%;height:100%;background:url('assets/images/seasons/winter-banner.jpg') center/cover;"></div>
+        <div class="season-overlay">
+          <div class="season-label">WINTER</div>
+          <div class="season-sub">18 episodes</div>
+        </div>
+        <div class="coming-soon-badge">COMING SOON</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== ABOUT ===== -->
+<section class="about-section fade-in" id="about">
+  <h3>About SEASØNS</h3>
+  <p>A vertical cinema series told in four seasons of music. BØDHI and MAŸA trace the oldest story there is: two people who recognize something in each other that the world hasn't named yet. Across four seasons of sound, what unfolds between them will change them both.</p>
+  <p>Whether it survives is the question that drives everything forward.</p>
+  <div style="margin-top: 20px;">
+    <a href="https://xn--seasns-eya.hearnow.com/spring" target="_blank" rel="noopener" class="btn btn-gold" style="display:inline-flex;">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Stream Spring Now
+    </a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h5>Stream</h5>
+      <a href="#">Spotify</a>
+      <a href="#">Apple Music</a>
+      <a href="#">YouTube Music</a>
+      <a href="#">Amazon Music</a>
+    </div>
+    <div class="footer-col">
+      <h5>Seasons</h5>
+      <a href="#" onclick="openModal('spring');return false;">Spring</a>
+      <a href="#" onclick="openModal('summer');return false;">Summer</a>
+      <a href="#" onclick="openModal('autumn');return false;">Autumn</a>
+      <a href="#" onclick="openModal('winter');return false;">Winter</a>
+    </div>
+    <div class="footer-col">
+      <h5>Follow</h5>
+      <a href="#">TikTok</a>
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+    </div>
+    <div class="footer-col">
+      <h5>More</h5>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Press</a>
+    </div>
+  </div>
+  <div class="footer-socials">
+    <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/></svg></a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm5.884-9.116a1.17 1.17 0 1 1-2.34 0 1.17 1.17 0 0 1 2.34 0z"/></svg></a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#141414" points="9.545 15.568 15.818 12 9.545 8.432 9.545 15.568"/></svg></a>
+  </div>
+  <div class="footer-bottom">
+    SEASØNS 2026 FRAMEZERØ CREATIVE. Four seasons. One story.
+  </div>
+</footer>
+
+<!-- ===== MINI PLAYER ===== -->
+<div class="mini-player" id="miniPlayer">
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+  <div class="mp-art" style="background:url('assets/images/episodes/spring-ep1.jpg') center/cover;"></div>
+  <div class="mp-info">
+    <h5>Watch You Grow</h5>
+    <p>BØDHI &amp; MAŸA</p>
+  </div>
+  <div class="mp-controls">
+    <button class="mp-btn" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="19 20 9 12 19 4 19 20"/><rect x="5" y="4" width="2" height="16"/></svg>
+    </button>
+    <button class="mp-btn play-pause" aria-label="Play" id="mpPlayBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+    </button>
+    <button class="mp-btn" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="5 4 15 12 5 20 5 4"/><rect x="17" y="4" width="2" height="16"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-sheet" id="modalSheet">
+    <div class="modal-handle"></div>
+    <div class="modal-hero">
+      <div class="modal-hero-bg" id="modalHeroBg"></div>
+      <div class="modal-hero-gradient"></div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav">
+  <a href="#home" class="bottom-nav-item active" data-tab="home">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    <span>Home</span>
+  </a>
+  <a href="#" class="bottom-nav-item" data-tab="listen" onclick="showPlayer();return false;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <span>Listen</span>
+  </a>
+  <a href="#seasons" class="bottom-nav-item" data-tab="seasons">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>
+    <span>Seasons</span>
+  </a>
+  <a href="#about" class="bottom-nav-item" data-tab="about">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    <span>About</span>
+  </a>
+</nav>
+
+<script>
+// ===== DATA =====
+const seasonData = {
+  spring: {
+    title: 'SPRING',
+    subtitle: 'Season 1',
+    year: '2026',
+    episodes: '9 Episodes',
+    runtime: '30 min',
+    genre: 'Folk / Dream-Pop',
+    gradient: 'spring-gradient',
+    color: '#6b8f4e',
+    match: '98% Match',
+    desc: 'Two strangers. One season of waking up to what your body can do. BØDHI and MAŸA stumble into desire, lust, and the kind of pleasure that rewires you. They get closer with every track \u2014 touching, wanting, learning the rules have changed. Spring ends right before they collapse into each other. Fully awake. Fully alive. Catastrophically ready for what comes next.',
+    tracks: [
+      { num: 1, title: 'Watch You Grow', duration: '3:56' },
+      { num: 2, title: 'Cheerleader', duration: '2:31' },
+      { num: 3, title: 'Jukebox', duration: '4:15' },
+      { num: 4, title: 'Freak In You', duration: '3:28' },
+      { num: 5, title: 'Rewind', duration: '3:06' },
+      { num: 6, title: 'Once Upon A Moment', duration: '4:00' },
+      { num: 7, title: 'Believe In This', duration: '4:34' },
+      { num: 8, title: "You're A Star", duration: '1:52' },
+      { num: 9, title: 'Sweet Freedom', duration: '3:11' }
+    ],
+    status: 'Now Streaming'
+  },
+  summer: {
+    title: 'SUMMER',
+    subtitle: 'Season 2',
+    year: 'TBA',
+    episodes: '17 Episodes',
+    runtime: 'TBA',
+    genre: 'Electronic / Synth',
+    gradient: 'summer-gradient',
+    color: '#e84393',
+    match: null,
+    desc: 'The bodies that touched in Spring now burn neon in city streets. Electric fury and defiance \u2014 what happens when the world sees what you\'ve built and decides you don\'t get to keep it.',
+    tracks: [],
+    status: 'Coming Soon'
+  },
+  autumn: {
+    title: 'AUTUMN',
+    subtitle: 'Season 3',
+    year: 'TBA',
+    episodes: '14 Episodes',
+    runtime: 'TBA',
+    genre: 'Blues / Electric Guitar',
+    gradient: 'autumn-gradient',
+    color: '#4a6fa5',
+    match: null,
+    desc: 'After the collapse. Stark blues and bleeding guitar \u2014 what death sounds like when it\'s not your body dying. They write letters no one will read.',
+    tracks: [],
+    status: 'Coming Soon'
+  },
+  winter: {
+    title: 'WINTER',
+    subtitle: 'Season 4',
+    year: 'TBA',
+    episodes: '18 Episodes',
+    runtime: 'TBA',
+    genre: 'Anthemic / Orchestral',
+    gradient: 'winter-gradient',
+    color: '#b8c6d4',
+    match: null,
+    desc: 'Built from ruins. This is what survives when everything else burns \u2014 not hope as wish, but something harder, colder, deliberate. They build anyway.',
+    tracks: [],
+    status: 'Coming Soon'
+  }
+};
+
+// ===== PROFILE PICKER =====
+function enterSite() {
+  document.getElementById('profilePicker').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+// Start with picker visible
+document.body.style.overflow = 'hidden';
+
+// ===== GENERATE EPISODE CARDS =====
+(function() {
+  const carousel = document.getElementById('episodeCarousel');
+  const springColors = ['#3a2e18','#2d2618','#342a16','#2a2415','#302818','#352c16','#2e2614','#332a18','#2c2416'];
+    const epImages = ['assets/images/episodes/spring-ep1.jpg','assets/images/episodes/spring-ep2.jpg','assets/images/episodes/spring-ep3.jpg','assets/images/episodes/spring-ep4.jpg','assets/images/episodes/spring-ep5.jpg','assets/images/episodes/spring-ep6.jpg','assets/images/episodes/spring-ep7.jpg','assets/images/episodes/spring-ep8.jpg','assets/images/episodes/spring-ep9.jpg'];
+  seasonData.spring.tracks.forEach((track, i) => {
+    const card = document.createElement('div');
+    card.className = 'episode-card';
+    card.onclick = function() { openModal('spring'); };
+    card.innerHTML = `
+      <div class="thumb" style="background:url('${epImages[i]}') center/cover, linear-gradient(135deg, ${springColors[i]} 0%, #1a1410 100%);">
+        <div class="ep-num">EP ${track.num}</div>
+        <div class="play-icon">
+          <svg viewBox="0 0 48 48" width="36" height="36"><circle cx="24" cy="24" r="22" fill="rgba(0,0,0,0.5)" stroke="white" stroke-width="1.5"/><polygon points="19 14 35 24 19 34" fill="white"/></svg>
+        </div>
+      </div>
+      <div class="info">
+        <h4>${track.title}</h4>
+        <span class="duration">${track.duration}</span>
+      </div>
+    `;
+    carousel.appendChild(card);
+  });
+})();
+
+// ===== STICKY NAV ON SCROLL =====
+let lastScroll = 0;
+window.addEventListener('scroll', function() {
+  const nav = document.getElementById('topNav');
+  if (window.scrollY > 60) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+  lastScroll = window.scrollY;
+}, { passive: true });
+
+// ===== INTERSECTION OBSERVER FOR FADE-INS =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== MODAL =====
+function openModal(season) {
+  const data = seasonData[season];
+  if (!data) return;
+  const overlay = document.getElementById('modalOverlay');
+  const bg = document.getElementById('modalHeroBg');
+  const body = document.getElementById('modalBody');
+
+  bg.className = 'modal-hero-bg ' + data.gradient;
+
+  let episodeHtml = '';
+  if (data.tracks.length > 0) {
+    episodeHtml = '<div class="episode-list"><h4>Episodes</h4>';
+    data.tracks.forEach(t => {
+      episodeHtml += `
+        <div class="episode-row">
+          <span class="ep-number">${t.num}</span>
+          <div class="ep-thumb ${data.gradient}"></div>
+          <div class="ep-info">
+            <h5>${t.title}</h5>
+            <span class="ep-dur">${t.duration}</span>
+          </div>
+        </div>`;
+    });
+    episodeHtml += '</div>';
+  }
+
+  body.innerHTML = `
+    <h2 class="modal-title">${data.title}</h2>
+    <div class="modal-meta">
+      ${data.match ? '<span class="match">' + data.match + '</span>' : ''}
+      <span>${data.year}</span>
+      <span>${data.episodes}</span>
+      <span>${data.genre}</span>
+    </div>
+    <div class="modal-actions">
+      ${data.status === 'Now Streaming'
+        ? '<a href="https://xn--seasns-eya.hearnow.com/spring" target="_blank" rel="noopener" class="btn btn-gold"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg> Listen Now</a>'
+        : '<button class="btn btn-secondary" disabled>' + data.status + '</button>'
+      }
+      <button class="btn btn-secondary" onclick="showPlayer()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Preview
+      </button>
+    </div>
+    <p class="modal-desc">${data.desc}</p>
+    ${episodeHtml}
+  `;
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== e.currentTarget && !e.target.closest('.modal-close')) return;
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ===== MINI PLAYER =====
+function showPlayer() {
+  document.getElementById('miniPlayer').classList.add('visible');
+}
+
+document.getElementById('mpPlayBtn').addEventListener('click', function() {
+  const icon = this.querySelector('svg');
+  const isPaused = icon.innerHTML.includes('polygon');
+  if (isPaused) {
+    icon.innerHTML = '<rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/>';
+  } else {
+    icon.innerHTML = '<polygon points="6 3 20 12 6 21 6 3" fill="currentColor"/>';
+  }
+});
+
+// ===== BOTTOM NAV ACTIVE STATE =====
+document.querySelectorAll('.bottom-nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ===== DRAG TO SCROLL CAROUSELS =====
+document.querySelectorAll('.carousel-track').forEach(track => {
+  let isDown = false, startX, scrollLeft;
+  track.addEventListener('mousedown', e => {
+    isDown = true; track.style.cursor = 'grabbing';
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+  track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = ''; });
+  track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = ''; });
+  track.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX);
+  });
+});
+</script>
+</body>
+</html>

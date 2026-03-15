@@ -19,7 +19,7 @@
   --bg-elevated: #222;
   --text-primary: #e5e5e5;
   --text-secondary: #999;
-  --text-muted: #666;
+  --text-muted: #aaa;
   --gold: #E8C547;
   --gold-dim: rgba(232, 197, 71, 0.15);
   --spring-green: #6b8f4e;
@@ -58,7 +58,7 @@ body {
   box-shadow: 0 1px 0 rgba(255,255,255,0.05);
 }
 .nav-logo {
-  height: 32px; width: auto;
+  height: 44px; width: auto;
   filter: brightness(1.1);
 }
 .nav-links { display: flex; gap: 20px; align-items: center; }
@@ -80,7 +80,7 @@ body {
 /* Mobile: hide text links, show only logo + CTA */
 @media (max-width: 768px) {
   .nav-links a:not(.nav-cta) { display: none; }
-  .nav-logo { height: 28px; }
+  .nav-logo { height: 38px; }
 }
 
 /* ===== BOTTOM NAV (Mobile) ===== */
@@ -132,9 +132,9 @@ body {
 .hero-badge {
   display: inline-block;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: 0.2em;
+  font-size: 16px; letter-spacing: 0.2em;
   color: var(--gold); background: var(--gold-dim);
-  padding: 4px 12px; border-radius: 2px;
+  padding: 6px 16px; border-radius: 2px;
   margin-bottom: 16px;
 }
 .hero-title {
@@ -150,12 +150,12 @@ body {
 }
 .hero-meta {
   display: flex; align-items: center; gap: 10px;
-  font-size: 12px; color: var(--text-muted);
+  font-size: 14px; color: var(--text-muted);
   margin-bottom: 20px;
 }
 .hero-meta .tag {
-  background: rgba(255,255,255,0.1); padding: 2px 8px;
-  border-radius: 2px; font-size: 11px; font-weight: 500;
+  background: rgba(255,255,255,0.15); padding: 3px 10px;
+  border-radius: 2px; font-size: 13px; font-weight: 500;
 }
 .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .btn {
@@ -627,7 +627,7 @@ body {
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-content fade-in">
-    <div class="hero-badge">SEASON 1</div>
+    <div class="hero-badge">SEASØN 1</div>
     <h1 class="hero-title">SPRING</h1>
     <p class="hero-subtitle">Two strangers. One season of waking up to what your body can do.</p>
     <div class="hero-meta">
@@ -898,7 +898,7 @@ body {
 const seasonData = {
   spring: {
     title: 'SPRING',
-    subtitle: 'Season 1',
+    subtitle: 'Seasøn 1',
     year: '2026',
     episodes: '9 Episodes',
     runtime: '30 min',
@@ -922,7 +922,7 @@ const seasonData = {
   },
   summer: {
     title: 'SUMMER',
-    subtitle: 'Season 2',
+    subtitle: 'Seasøn 2',
     year: 'TBA',
     episodes: '17 Episodes',
     runtime: 'TBA',
@@ -936,7 +936,7 @@ const seasonData = {
   },
   autumn: {
     title: 'AUTUMN',
-    subtitle: 'Season 3',
+    subtitle: 'Seasøn 3',
     year: 'TBA',
     episodes: '14 Episodes',
     runtime: 'TBA',
@@ -950,7 +950,7 @@ const seasonData = {
   },
   winter: {
     title: 'WINTER',
-    subtitle: 'Season 4',
+    subtitle: 'Seasøn 4',
     year: 'TBA',
     episodes: '18 Episodes',
     runtime: 'TBA',

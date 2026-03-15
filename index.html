@@ -1221,15 +1221,13 @@ function trackEvent(eventName, properties) {
   console.log('[Analytics]', eventName, properties);
 }
 
-// Track profile picker selection
+// Track profile picker selection (uses addEventListener so inline onclick still fires)
 (function() {
   document.querySelectorAll('.profile').forEach(p => {
-    const origClick = p.onclick;
-    p.onclick = function() {
+    p.addEventListener('click', function() {
       const name = this.querySelector('span').textContent;
       trackEvent('profile_selected', { profile: name });
-      if (origClick) origClick.call(this);
-    };
+    });
   });
 })();
 

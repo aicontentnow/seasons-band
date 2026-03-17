@@ -553,23 +553,13 @@ body {
   width: 100%; aspect-ratio: 16/10;
   position: relative; overflow: hidden;
 }
+.modal-hero.episode-hero {
+  aspect-ratio: 1/1;
+}
 .modal-hero-bg { position: absolute; inset: 0; }
 .modal-hero-bg.episode-art-mode {
   background-size: cover !important;
   background-position: center !important;
-  filter: blur(20px) brightness(0.4);
-  transform: scale(1.15);
-}
-.modal-hero-ep-art {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1;
-}
-.modal-hero-ep-art img {
-  height: 100%; max-height: 100%;
-  object-fit: contain;
-  border-radius: 4px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
 }
 .modal-hero-gradient {
   position: absolute; inset: 0;
@@ -600,12 +590,15 @@ body {
   background: rgba(255,255,255,0.08); border-radius: 6px;
 }
 .modal-close {
-  position: absolute; top: 12px; right: 12px;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(0,0,0,0.6); border: none;
-  color: #fff; cursor: pointer; z-index: 10;
+  position: absolute; top: 14px; right: 14px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(0,0,0,0.75); border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff; cursor: pointer; z-index: 20;
   display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent;
 }
+.modal-close:active { background: rgba(255,255,255,0.2); }
+.modal-close svg { width: 20px; height: 20px; }
 
 /* Episode list inside modal */
 .episode-list { margin-top: 8px; }
@@ -773,7 +766,7 @@ body {
 
 <!-- ===== TOP NAV ===== -->
 <nav class="top-nav" id="topNav">
-  <a href="#home" style="display:flex;align-items:center;"><img class="nav-logo" src="assets/images/logo/brandmark-greyscale.png" alt="SEASØNS"></a>
+  <a href="#home" onclick="enterSite();closeModal();window.scrollTo(0,0);return true;" style="display:flex;align-items:center;"><img class="nav-logo" src="assets/images/logo/brandmark-greyscale.png" alt="SEASØNS"></a>
   <div class="nav-links">
     <a href="#home" class="active">Home</a>
     <a href="#seasons">SEASØNS</a>
@@ -1093,9 +1086,14 @@ const seasonData = {
 function enterSite() {
   document.getElementById('profilePicker').classList.add('hidden');
   document.body.style.overflow = '';
+  try { sessionStorage.setItem('seasonsEntered', '1'); } catch(e) {}
 }
-// Start with picker visible
-document.body.style.overflow = 'hidden';
+// Check if user already entered this session
+if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('seasonsEntered')) {
+  document.getElementById('profilePicker').classList.add('hidden');
+} else {
+  document.body.style.overflow = 'hidden';
+}
 
 // ===== GENERATE EPISODE CARDS =====
 (function() {
@@ -1148,12 +1146,12 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 function openModal(season) {
   const data = seasonData[season];
   if (!data) return;
-  // Clean up any episode art overlay from previous episode modal
-  const oldArt = document.querySelector('.modal-hero-ep-art');
-  if (oldArt) oldArt.remove();
   const overlay = document.getElementById('modalOverlay');
   const bg = document.getElementById('modalHeroBg');
   const body = document.getElementById('modalBody');
+
+  // Reset hero to widescreen for series modal
+  bg.parentElement.classList.remove('episode-hero');
 
   bg.className = 'modal-hero-bg ' + data.gradient;
   if (data.cover) {
@@ -1214,22 +1212,16 @@ function openEpisodeModal(season, epIndex) {
   const bg = document.getElementById('modalHeroBg');
   const body = document.getElementById('modalBody');
 
-  // Use episode art as hero: blurred bg + centered portrait image
+  // Use episode art as square hero
   const epImg = data.epImages && data.epImages[epIndex] ? data.epImages[epIndex] : '';
-  // Remove any previous episode art overlay
-  const oldArt = document.querySelector('.modal-hero-ep-art');
-  if (oldArt) oldArt.remove();
+  const heroEl = bg.parentElement;
+  heroEl.classList.add('episode-hero');
 
   if (epImg) {
     bg.className = 'modal-hero-bg episode-art-mode ' + data.gradient;
     bg.style.backgroundImage = `url('${epImg}')`;
     bg.style.backgroundSize = 'cover';
-    bg.style.backgroundPosition = 'center';
-    // Add centered portrait image on top
-    const artDiv = document.createElement('div');
-    artDiv.className = 'modal-hero-ep-art';
-    artDiv.innerHTML = `<img src="${epImg}" alt="Episode ${track.num}">`;
-    bg.parentElement.insertBefore(artDiv, bg.nextSibling);
+    bg.style.backgroundPosition = 'center top';
   } else if (data.cover) {
     bg.className = 'modal-hero-bg ' + data.gradient;
     bg.style.backgroundImage = `url('${data.cover}')`;
@@ -1288,9 +1280,9 @@ function closeModal(e) {
   if (e && e.target !== e.currentTarget && !e.target.closest('.modal-close')) return;
   document.getElementById('modalOverlay').classList.remove('active');
   document.body.style.overflow = '';
-  // Clean up episode art overlay
-  const epArt = document.querySelector('.modal-hero-ep-art');
-  if (epArt) epArt.remove();
+  // Reset episode hero class
+  const heroEl = document.querySelector('.modal-hero');
+  if (heroEl) heroEl.classList.remove('episode-hero');
 }
 
 // ===== MINI PLAYER =====

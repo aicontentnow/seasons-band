@@ -548,6 +548,23 @@ body {
   position: relative; overflow: hidden;
 }
 .modal-hero-bg { position: absolute; inset: 0; }
+.modal-hero-bg.episode-art-mode {
+  background-size: cover !important;
+  background-position: center !important;
+  filter: blur(20px) brightness(0.4);
+  transform: scale(1.15);
+}
+.modal-hero-ep-art {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1;
+}
+.modal-hero-ep-art img {
+  height: 100%; max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
 .modal-hero-gradient {
   position: absolute; inset: 0;
   background: linear-gradient(to top, var(--bg-elevated) 0%, transparent 60%);
@@ -1125,6 +1142,9 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 function openModal(season) {
   const data = seasonData[season];
   if (!data) return;
+  // Clean up any episode art overlay from previous episode modal
+  const oldArt = document.querySelector('.modal-hero-ep-art');
+  if (oldArt) oldArt.remove();
   const overlay = document.getElementById('modalOverlay');
   const bg = document.getElementById('modalHeroBg');
   const body = document.getElementById('modalBody');
@@ -1188,13 +1208,29 @@ function openEpisodeModal(season, epIndex) {
   const bg = document.getElementById('modalHeroBg');
   const body = document.getElementById('modalBody');
 
-  // Use series banner as hero (episode art is portrait, looks bad stretched wide)
-  bg.className = 'modal-hero-bg ' + data.gradient;
-  if (data.cover) {
+  // Use episode art as hero: blurred bg + centered portrait image
+  const epImg = data.epImages && data.epImages[epIndex] ? data.epImages[epIndex] : '';
+  // Remove any previous episode art overlay
+  const oldArt = document.querySelector('.modal-hero-ep-art');
+  if (oldArt) oldArt.remove();
+
+  if (epImg) {
+    bg.className = 'modal-hero-bg episode-art-mode ' + data.gradient;
+    bg.style.backgroundImage = `url('${epImg}')`;
+    bg.style.backgroundSize = 'cover';
+    bg.style.backgroundPosition = 'center';
+    // Add centered portrait image on top
+    const artDiv = document.createElement('div');
+    artDiv.className = 'modal-hero-ep-art';
+    artDiv.innerHTML = `<img src="${epImg}" alt="Episode ${track.num}">`;
+    bg.parentElement.insertBefore(artDiv, bg.nextSibling);
+  } else if (data.cover) {
+    bg.className = 'modal-hero-bg ' + data.gradient;
     bg.style.backgroundImage = `url('${data.cover}')`;
     bg.style.backgroundSize = 'cover';
     bg.style.backgroundPosition = 'center';
   } else {
+    bg.className = 'modal-hero-bg ' + data.gradient;
     bg.style.backgroundImage = '';
   }
 
@@ -1246,6 +1282,9 @@ function closeModal(e) {
   if (e && e.target !== e.currentTarget && !e.target.closest('.modal-close')) return;
   document.getElementById('modalOverlay').classList.remove('active');
   document.body.style.overflow = '';
+  // Clean up episode art overlay
+  const epArt = document.querySelector('.modal-hero-ep-art');
+  if (epArt) epArt.remove();
 }
 
 // ===== MINI PLAYER =====

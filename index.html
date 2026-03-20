@@ -1459,10 +1459,18 @@ let audioPlayer = null;
 let isPlaying = false;
 let progressInterval = null;
 
-// Audio file paths (update these when MP3s are added)
-const audioFiles = seasonData.spring.tracks.map((t, i) =>
-  `assets/audio/spring-${String(i + 1).padStart(2, '0')}-${t.title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-')}.mp3`
-);
+// Audio file paths
+const audioFiles = [
+  'assets/audio/spring/01-watch-you-grow.mp3',
+  'assets/audio/spring/02-cheerleader.mp3',
+  'assets/audio/spring/03-jukebox.mp3',
+  'assets/audio/spring/04-freak-in-you.mp3',
+  'assets/audio/spring/05-rewind.mp3',
+  'assets/audio/spring/06-once-upon-a-moment.mp3',
+  'assets/audio/spring/07-believe-in-this.mp3',
+  'assets/audio/spring/08-youre-a-star.mp3',
+  'assets/audio/spring/09-sweet-freedom.mp3'
+];
 
 function playTrack(index) {
   const tracks = seasonData.spring.tracks;
@@ -1501,6 +1509,10 @@ function playTrack(index) {
   const mp = document.getElementById('miniPlayer');
   mp.querySelector('.mp-info h5').textContent = tracks[index].title;
   mp.querySelector('.mp-info p').textContent = 'SEASØNS';
+  const mpArt = mp.querySelector('.mp-art');
+  if (mpArt && seasonData.spring.epImages[index]) {
+    mpArt.style.background = `url('${seasonData.spring.epImages[index]}') center/cover`;
+  }
   mp.classList.add('visible');
 
   // Update play button to pause icon
@@ -1533,11 +1545,10 @@ function playTrack(index) {
     }
   });
 
-  audioPlayer.addEventListener('error', function() {
-    // Audio file not available yet, simulate playing state visually
-    isPlaying = true;
+  audioPlayer.addEventListener('error', function(e) {
+    console.log('Audio error for track ' + index, e);
+    isPlaying = false;
     updatePlayState();
-    simulateProgress(index);
   });
 
   audioPlayer.load();

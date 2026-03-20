@@ -74,7 +74,7 @@
 <!-- PostHog Analytics -->
 <script>
   !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]]),t[o.length-1]]=a}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-js.posthog.com")+"/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0===a&&(a={}),u._i.push([i,s,a]),u.identify=u.identify||function(t){u._i.push(["identify",t])},u.captureEvent=u.captureEvent||function(t,e){u._i.push(["capture",t,e])},u.capturePageView=u.capturePageView||function(){u._i.push(["capture","$pageview"])},u.reset=u.reset||function(){u._i.push(["reset"])},o=["trackEvent","track","trackPageView","identify","reset","setPersonProperties","capture","captureEvent","capturePageView"];n=0;n<o.length;n++)g(u,o[n]+"."+o[n]);e.SV=1})}(document,window.posthog||[]);
-  posthog.init('phc_5Cx3YhgB70AfJHnjAIZNKQxXi6SWb7GZSOHwUaJXjp5',{api_host:'https://us.i.posthog.com'})
+  posthog.init('phc_5Cx3YhgB70AfJHnjAIZNKQxXi6SWb7GZSOHwUaJXjp5',{api_host:'https://us.i.posthog.com',persistence:'localStorage'})
 </script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -730,6 +730,11 @@ body {
   background: var(--gold); color: #0a0a0a;
 }
 .mp-btn.play-pause:hover { background: #d4b13e; }
+.mp-btn.active { color: var(--gold); }
+.mp-btn.active svg { fill: var(--gold); stroke: var(--gold); }
+.mp-secondary-controls { display: flex; gap: 4px; align-items: center; margin-left: 4px; }
+.mp-secondary-controls .mp-btn { width: 30px; height: 30px; }
+.mp-secondary-controls .mp-btn svg { width: 16px; height: 16px; }
 .mini-player .progress-bar {
   position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: rgba(255,255,255,0.1);
@@ -1014,15 +1019,23 @@ body {
     <p>BØDHI &amp; MAŸA</p>
   </div>
   <div class="mp-controls">
-    <button class="mp-btn" aria-label="Previous">
+    <button class="mp-btn" aria-label="Previous" id="mpPrevBtn">
       <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="19 20 9 12 19 4 19 20"/><rect x="5" y="4" width="2" height="16"/></svg>
     </button>
     <button class="mp-btn play-pause" aria-label="Play" id="mpPlayBtn">
       <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="6 3 20 12 6 21 6 3"/></svg>
     </button>
-    <button class="mp-btn" aria-label="Next">
+    <button class="mp-btn" aria-label="Next" id="mpNextBtn">
       <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><polygon points="5 4 15 12 5 20 5 4"/><rect x="17" y="4" width="2" height="16"/></svg>
     </button>
+    <div class="mp-secondary-controls">
+      <button class="mp-btn" aria-label="Shuffle" id="mpShuffleBtn" onclick="toggleShuffle()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+      </button>
+      <button class="mp-btn" aria-label="Repeat" id="mpRepeatBtn" onclick="toggleRepeat()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -1519,6 +1532,54 @@ let currentTrackIndex = -1;
 let audioPlayer = null;
 let isPlaying = false;
 let progressInterval = null;
+let repeatMode = 0; // 0=off, 1=repeat-all, 2=repeat-one
+let shuffleMode = false;
+let shuffleQueue = [];
+let streamStartTime = 0;
+let hasCountedStream = false;
+
+function toggleRepeat() {
+  repeatMode = (repeatMode + 1) % 3;
+  const btn = document.getElementById('mpRepeatBtn');
+  btn.classList.toggle('active', repeatMode > 0);
+  if (repeatMode === 2) {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/><text x="10" y="16" fill="currentColor" stroke="none" font-size="10" font-weight="bold">1</text></svg>';
+  } else {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>';
+  }
+  trackEvent('player_repeat', { mode: ['off','all','one'][repeatMode] });
+}
+
+function toggleShuffle() {
+  shuffleMode = !shuffleMode;
+  const btn = document.getElementById('mpShuffleBtn');
+  btn.classList.toggle('active', shuffleMode);
+  if (shuffleMode) {
+    // Build shuffle queue from remaining tracks
+    shuffleQueue = seasonData.spring.tracks.map((_, i) => i).filter(i => i !== currentTrackIndex);
+    for (let i = shuffleQueue.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffleQueue[i], shuffleQueue[j]] = [shuffleQueue[j], shuffleQueue[i]];
+    }
+  }
+  trackEvent('player_shuffle', { enabled: shuffleMode });
+}
+
+function getNextTrackIndex() {
+  const tracks = seasonData.spring.tracks;
+  if (repeatMode === 2) return currentTrackIndex;
+  if (shuffleMode && shuffleQueue.length > 0) return shuffleQueue.shift();
+  if (currentTrackIndex < tracks.length - 1) return currentTrackIndex + 1;
+  if (repeatMode === 1) return 0;
+  return -1;
+}
+
+function getPrevTrackIndex() {
+  if (audioPlayer && audioPlayer.currentTime > 3) return currentTrackIndex; // restart current
+  if (currentTrackIndex > 0) return currentTrackIndex - 1;
+  if (repeatMode === 1) return seasonData.spring.tracks.length - 1;
+  return -1;
+}
 
 // Audio file paths
 const audioFiles = [
@@ -1587,20 +1648,54 @@ function playTrack(index) {
   audioPlayer.addEventListener('canplay', function() {
     audioPlayer.play();
     isPlaying = true;
+    streamStartTime = Date.now();
+    hasCountedStream = false;
     updatePlayState();
     startProgressUpdate();
   });
 
+  // Track partial listens when user navigates away or switches tracks
+  audioPlayer.addEventListener('pause', function() {
+    if (streamStartTime > 0 && !hasCountedStream) {
+      const listenDuration = (Date.now() - streamStartTime) / 1000;
+      const trackDuration = audioPlayer.duration || 0;
+      const pctListened = trackDuration > 0 ? (listenDuration / trackDuration) * 100 : 0;
+      if (listenDuration >= 30 || pctListened >= 80) {
+        hasCountedStream = true;
+        trackEvent('stream_counted', {
+          track: tracks[index].title,
+          track_number: index + 1,
+          album: 'Spring',
+          listen_seconds: Math.round(listenDuration),
+          pct_listened: Math.round(pctListened),
+          full: pctListened >= 95
+        });
+      } else if (listenDuration >= 5) {
+        trackEvent('stream_partial', {
+          track: tracks[index].title,
+          track_number: index + 1,
+          album: 'Spring',
+          listen_seconds: Math.round(listenDuration),
+          pct_listened: Math.round(pctListened)
+        });
+      }
+    }
+  });
+
   audioPlayer.addEventListener('ended', function() {
     isPlaying = false;
+    // Track full stream completion
     trackEvent('track_completed', {
       track: tracks[index].title,
       track_number: index + 1,
-      album: 'Spring'
+      album: 'Spring',
+      listen_duration: audioPlayer.duration,
+      full_listen: true
     });
-    // Auto-play next track
-    if (index < tracks.length - 1) {
-      playTrack(index + 1);
+    // Get next track based on repeat/shuffle mode
+    const next = getNextTrackIndex();
+    if (next >= 0) {
+      playTrack(next);
     } else {
       updatePlayState();
     }
@@ -1687,6 +1782,18 @@ document.getElementById('mpPlayBtn').addEventListener('click', function(e) {
   if (currentTrackIndex >= 0) {
     playTrack(currentTrackIndex);
   }
+});
+
+document.getElementById('mpPrevBtn').addEventListener('click', function(e) {
+  e.stopPropagation();
+  const prev = getPrevTrackIndex();
+  if (prev >= 0) playTrack(prev);
+});
+
+document.getElementById('mpNextBtn').addEventListener('click', function(e) {
+  e.stopPropagation();
+  const next = getNextTrackIndex();
+  if (next >= 0) playTrack(next);
 });
 
 // ===== SECTION VIEW TRACKING =====
